@@ -9,6 +9,7 @@ import {
 } from "../API/API.js";
 import * as mc from "@minecraft/server";
 import "./manager/scoreBoard.js";
+import "./manager/itemEdit.js";
 
 /*
   等级：
@@ -86,6 +87,14 @@ class ManagerInterface extends ScriptUI.ActionFormData {
       	},
       	event: (player)=>{
       		new (UIManager.getUI("CustomManagerGUI"))().sendToPlayer(player);
+      	}
+      },
+      {
+      	buttonDef: {
+      		text: "自定义物品属性"
+      	},
+      	event: (player)=>{
+      		new (UIManager.getUI("ItemEditGUI"))(player).sendToPlayer(player);
       	}
       },
       {

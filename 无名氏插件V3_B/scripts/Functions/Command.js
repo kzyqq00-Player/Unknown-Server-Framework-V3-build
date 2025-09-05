@@ -11,7 +11,7 @@ import {
 } from "../UserInterfaces/CustomUIGUI.js";
 
 mc.system.beforeEvents.startup.subscribe((event) => {
-	event.customCommandRegistry.registerEnum("usf:manager", ["get_owner", "reset_owner"]);
+	event.customCommandRegistry.registerEnum("usf:manager", ["get_owner", "reset_owner", "item_edit"]);
 	event.customCommandRegistry.registerEnum("usf:func", ["cd", "menu", "tp", "open"]);
 	event.customCommandRegistry.registerCommand({
 		cheatsRequired: false,
@@ -69,6 +69,23 @@ mc.system.beforeEvents.startup.subscribe((event) => {
 					}
 				}
 				break;
+			case "item_edit":
+				if (source.sourceType !== "Entity") {
+					return {
+						message: "发送者非实体",
+						status: 1
+					}
+					break;
+				};
+				if (source.sourceEntity.typeId !== "minecraft:player") {
+					return {
+						message: "发送者非玩家",
+						status: 1
+					}
+					break;
+				};
+				new (UIManager.getUI("ItemEditGUI"))(source.sourceEntity).sendToPlayer(source.sourceEntity);
+				break;
 		}
 	});
 	event.customCommandRegistry.registerCommand({
@@ -81,8 +98,8 @@ mc.system.beforeEvents.startup.subscribe((event) => {
 			type: "Enum"
 		}],
 		optionalParameters: [{
-		  name: "ui-uuid",
-		  type: "String"
+			name: "ui-uuid",
+			type: "String"
 		}]
 	}, (source, arg, ui_uuid) => {
 		if (source.sourceType !== "Entity") {
@@ -99,18 +116,18 @@ mc.system.beforeEvents.startup.subscribe((event) => {
 		};
 		switch (arg) {
 			case "cd":
-      case "menu":
-        if(source?.sourceEntity){
-          new (UIManager.getUI("mainGUI"))().sendToPlayer(source.sourceEntity);
-        }
-        break;
-      case "open":
-        if(source?.sourceEntity.typeId === "minecraft:player"){
-        	if(ui_uuid?.length >= 36){
-        		new CustomUI(CustomUI.getUIFromUUID(ui_uuid)).sendToPlayer(source?.sourceEntity);
-        	}
-        }
-        break;
+			case "menu":
+				if (source?.sourceEntity) {
+					new(UIManager.getUI("mainGUI"))().sendToPlayer(source.sourceEntity);
+				}
+				break;
+			case "open":
+				if (source?.sourceEntity.typeId === "minecraft:player") {
+					if (ui_uuid?.length >= 36) {
+						new CustomUI(CustomUI.getUIFromUUID(ui_uuid)).sendToPlayer(source?.sourceEntity);
+					}
+				}
+				break;
 		}
 	})
 });

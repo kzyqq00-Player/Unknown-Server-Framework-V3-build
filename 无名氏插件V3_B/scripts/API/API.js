@@ -189,7 +189,7 @@ export class USFPlayer {
     getLevel: (player) => {
       return player.getDynamicProperty("usf:opLevel");
     },
-    setLevel(player, level) => {
+    setLevel: (player, level) => {
       player.setDynamicProperty("usf:opLevel", level);
     }
   }

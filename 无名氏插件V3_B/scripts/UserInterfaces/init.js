@@ -6,10 +6,10 @@ import "./CustomUIGUI.js";
 let UI = {};
 
 class UIManager {
-  static addUI = (uiClass)=>{
+  static addUI = (uiClass) => {
     UI[uiClass.typeId] = uiClass;
   };
-  static getUI = (typeId)=>{
+  static getUI = (typeId) => {
     return UI[typeId];
   };
 };
