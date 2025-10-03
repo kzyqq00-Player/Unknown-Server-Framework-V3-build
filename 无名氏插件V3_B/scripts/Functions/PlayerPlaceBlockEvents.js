@@ -3,6 +3,7 @@ import {
   Land,
   USFPlayer
 } from "../API/API.js";
+import { sendLog } from "../logServer/server.js"
 mc.world.beforeEvents.playerPlaceBlock.subscribe((event)=>{
   let landList = Land.manager.getLandList();
   for(let land of landList){
@@ -10,4 +11,9 @@ mc.world.beforeEvents.playerPlaceBlock.subscribe((event)=>{
       event.cancel = true;
     }
   };
+  sendLog({
+		filePath: "usf_log/player/",
+		fileName: event.player.name,
+		data: `放置方块 ${event.block.typeId} 在 x: ${event.block.x}, y: ${event.block.y}, z: ${event.block.z} `
+	});
 });

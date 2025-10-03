@@ -72,10 +72,11 @@ function worldPointListIO(mode, list = []) {
 //列表模板
 class PointList extends ScriptUI.ActionFormData {
   //@Override
+  //覆写setBeforeSendEvents方法
   setBeforeSendEvents(events, type) {
     this.beforeEvents = (player) => {
-      let points = (type === 1 ? playerPointListIO(player, 0) : worldPointListIO(0));
-      events(player, points);
+      let points = (type === 1 ? playerPointListIO(player, 0) : worldPointListIO(0));//类型判断，0为世界传送点，1为玩家传送点
+      events(player, points);//调用event函数（玩家，传送点列表）
       for (let index = 0; index < points.length; index++) {
         this.addButton({
           buttonDef: {
@@ -116,6 +117,7 @@ class AddPoint extends ScriptUI.ModalFormData {
 
       points.push({
         name: results.get("point_name"),
+        //将玩家x、y、z位置设置为方块中点（0.5, 0, 0.5）
         sender: (teleportId === 1 ? undefined : player.name),
         location: {
           x: loc.x + 0.5,
@@ -124,7 +126,7 @@ class AddPoint extends ScriptUI.ModalFormData {
           dimensionId: player.dimension.id
         }
       });
-      if (teleportId === 1) playerPointListIO(player, 1, points);
+      if (teleportId === 1) playerPointListIO(player, 1, points);//判断传送点类型发出对应界面
       if (teleportId === 2) worldPointListIO(1, points);
     });
   }
@@ -239,6 +241,11 @@ class TeleportGUI extends ScriptUI.ActionFormData {
         event: (player) => {
           new PublicWorldPoint().sendToPlayer(player);
         }
+      },
+      {
+      	buttonDef: {
+      		text: "玩家互传"
+      	}
       }
     ]);
   };

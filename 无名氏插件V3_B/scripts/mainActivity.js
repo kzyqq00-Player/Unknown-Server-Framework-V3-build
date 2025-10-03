@@ -1,4 +1,5 @@
 import * as mc from "@minecraft/server"
+import "./logServer/server.js"
 import "./UserInterfaces/init.js";
 import "./Functions/init.js";
 import {
@@ -8,8 +9,8 @@ import {
 	DefaultOptions
 } from "./Options.js";
 
-const USFVersion = "3.1.0-B";
-const MinecraftVersion = [1, 21, 94];
+const USFVersion = "3.1.8-B";
+const MinecraftVersion = "1.21.120+";
 
 const DefaultDynamicPropValue = [{
 		key: "usf:playerGenId",
@@ -45,7 +46,10 @@ function LoadDefaultConfig(obj, stringValue = "") {
 
 
 mc.world.afterEvents.worldLoad.subscribe(() => {
-	Log.log("[USF]--加载中");
+	Log.log("[USF]--加载中--");
+	Log.log(`[USF]--信息：mc支持版本：${MinecraftVersion}`);
+	Log.log(`USF版本：${USFVersion}`);
+	Log.log(`更多信息请到管理→插件详细信息查看`);
 	LoadDefaultConfig(DefaultOptions);
 	if (mc.world.getDynamicProperty("usf:owner") === undefined) {
 		Log.log("服主未选定，输入/usf:func get_owner 选为服主");

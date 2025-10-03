@@ -18,6 +18,7 @@ export class Vector {
       z: vector1.z + vector2.z
     };
   };
+  //获取距一点距离为theDistance，角度xz处的坐标
   static faceLocation(theVector, theDistance, theRotation) {
     let faceVector_y = (theVector.y - Math.sin(theRotation.x * Math.PI / 180) * theDistance);
     let faceVector_r = (Math.cos(theRotation.x * Math.PI / 180) * theDistance);
@@ -30,13 +31,15 @@ export class Vector {
     };
     return finallyVector;
   };
+  //乘
   static mul(vector, num) {
     return {
       x: vector.x * num,
       y: vector.y * num,
       z: vector.z * num
     };
-  }
+  };
+  //距离
   static distance(Vector1, Vector2) {
     let TheDistance = Math.sqrt(Math.pow((Vector1.x - Vector2.x), 2) + Math.pow((Vector1.y - Vector2.y), 2) + Math.pow((Vector1.z - Vector2.z), 2));
     return TheDistance;
@@ -100,15 +103,18 @@ export class Land {
     } else {
       this.pos = data.pos;
       this.dimensionId = data.dimensionId;
-    }
+    };
+    //这玩意好像没用，但看EarthDLL代码中有就写了
     this.centerPos = {
       x: (this.pos.max.x + this.pos.min.x) / 2,
       y: (this.pos.max.y + this.pos.min.y) / 2,
       z: (this.pos.max.z + this.pos.min.z) / 2
     };
+    
     if (data.member !== undefined) {
       this.member = data.member;
     };
+    
     if (data.setting !== undefined) {
       this.setting = data.setting;
     };

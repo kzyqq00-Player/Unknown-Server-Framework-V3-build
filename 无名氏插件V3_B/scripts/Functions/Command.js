@@ -10,13 +10,16 @@ import {
 	CustomUI
 } from "../UserInterfaces/CustomUIGUI.js";
 
+import { sendLog } from "../logServer/server.js"
+
+
 mc.system.beforeEvents.startup.subscribe((event) => {
 	event.customCommandRegistry.registerEnum("usf:manager", ["get_owner", "reset_owner", "item_edit"]);
 	event.customCommandRegistry.registerEnum("usf:func", ["cd", "menu", "tp", "open"]);
 	event.customCommandRegistry.registerCommand({
 		cheatsRequired: false,
 		description: "usf管理员指令",
-		permissionLevel: 2,
+		permissionLevel: 1,
 		name: "usf:manager",
 		mandatoryParameters: [{
 			name: "usf:manager",
@@ -129,5 +132,21 @@ mc.system.beforeEvents.startup.subscribe((event) => {
 				}
 				break;
 		}
-	})
+	});
+	
+	//test
+	/*event.customCommandRegistry.registerCommand({
+		cheatsRequired: false,
+		description: "log-connect",
+		permissionLevel: 2,
+		name: "usf:log",
+		mandatoryParameters: [{
+			name: "log",
+			type: "String"
+		}]
+	}, (source, arg) => {
+		sendLog(JSON.parse(arg));
+	})*/
+	
+	
 });

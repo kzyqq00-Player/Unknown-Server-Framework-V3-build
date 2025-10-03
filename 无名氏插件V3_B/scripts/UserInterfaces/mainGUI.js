@@ -16,8 +16,7 @@ class MainInterface extends ScriptUI.ActionFormData {
 		this.setInformation();
 		this.setButtonsArray([{
 				buttonDef: {
-					text: "传送",
-					iconPath: undefined
+					text: "传送"
 				},
 				condition: (player) => {
 					return true;
@@ -74,8 +73,20 @@ class MainInterface extends ScriptUI.ActionFormData {
 				event: (player) => {
 					new(UIManager.getUI("ManagerGUI"))(player).sendToPlayer(player);
 				}
+			},
+			{
+				buttonDef: {
+					text: "测试"
+				},
+				condition: (player) => {
+					return false;
+				},
+				event: (player) => {
+					new(UIManager.getUI("developUI"))().sendToPlayer(player);
+				}
 			}
 		]);
+		
 		this.setBeforeSendEvents((player, ui) => {
 			//修sb ojang的键鼠bug
 			if (Date.now() - (player?.openTime ? player.openTime : 0) < 1000) {

@@ -48,6 +48,7 @@ class ItemEditGUI extends ScriptUI.ModalFormData {
 						break;
 				};
 				player.sendMessage("error：不可用方块列表：" + JSON.stringify(unavaiableBlockID));
+				//USFAPI("error：不可用方块列表：" + JSON.stringify(unavaiableBlockID));
 			};
 		}
 		this.setTitle("物品编辑");
@@ -148,6 +149,12 @@ class ItemEditGUI extends ScriptUI.ModalFormData {
 					}).sendToPlayer(player);
 					return;
 					break;
+				case 4: 
+					new ComponentListUI({
+						itemStack: item,
+						nextUI: ItemEditGUI
+					}).sendToPlayer(player);
+					return;
 			};
 
 			if (result.get("item_save")) {
@@ -208,9 +215,26 @@ class ListUI extends ScriptUI.ActionFormData {
 	};
 };
 
-class ComponentOperateUI {
 
+/*class ComponentListUI extends ScriptUI.ActionFormData {
+	constructor(showData){
+		this.setTitle("物品组件编辑（仅API提供的）");
+		for(let component of showData.itemStack.getComponents()){
+			this.addButton({
+				buttonDef: {
+					text: component.componentId
+				},
+				event: (player)=>{
+					new ComponentView(component, showData).sendToPlayer(player);
+				}
+			});
+		}
+	}
 };
+
+class ComponentView extends ScriptUI.ModalFormData {
+	
+}*/
 
 class AddItemUI extends ScriptUI.ModalFormData {
 	constructor(data) {
